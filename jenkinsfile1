@@ -1,41 +1,63 @@
 pipeline {
-    environment {
-        registry = "umair1999/cicd_12"
-        registryCredential = 'dockerhub_id'
-        dockerImage = ''
-    }
-    
     agent any
-    
+
+    environment {
+        // Define environment variables for Git and Docker Hub credentials
+        GIT_CREDENTIALS = credentials('jenkins')
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
+        //DOCKER_IMAGE_NAME = 'umair1999/CICD'
+        //DOCKER_IMAGE_TAG = 'latest'
+    }
+
     stages {
-        stage('Cloning our Git') {
-            steps {
-                git 'https://github.com/SmUmair1/Project'
-            }
-        }
-        
-        stage('Building our image') {
+        stage('Clone Git Repository') {
             steps {
                 script {
-                    dockerImage = docker.build "${registry}:${BUILD_NUMBER}"
+                    // Clone the Git repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', credentialsId: GIT_CREDENTIALS]]])
                 }
             }
         }
-        
-        stage('Deploy our image') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
+                    // Build the Docker image
+                    //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
+                     sh 'echo "Umai123!!" | sudo -S docker build -t umair1999/pythonapp:Latest .'
+             
+                }
+            }
+        }
+
+        // stage('Tag Docker Image') {
+        //     steps {
+        //         script {
+        //             // Tag the Docker image
+        //             docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").tag("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+        //         }
+        //     }
+        // }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Log in to Docker Hub
+                    docker.withRegistry('https://hub.docker.com/repository/docker/umair1999/pythonapp/general', "${DOCKER_HUB_CREDENTIALS}") {
+                        // Push the Docker image to Docker Hub
+                        docker.image("app/app.py:Latest").push()
                     }
                 }
             }
         }
-        
-        stage('Cleaning up') {
-            steps {
-                sh "docker rmi ${registry}:${BUILD_NUMBER}"
-            }
+    }
+
+    post {
+        success {
+            echo 'Pipeline successfully executed!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
