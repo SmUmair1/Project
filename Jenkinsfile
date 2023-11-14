@@ -41,8 +41,9 @@ pipeline {
                     }
         
                     // Push the Docker image to Docker Hub
-                    sh 'docker push app:latest'
-                    sh 'docker push app:1.0'
+                    sh 'docker push organization/app:latest'
+                    sh 'docker push organization/app:1.0'
+
                 }
             }
         }
