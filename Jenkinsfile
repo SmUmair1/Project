@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image using the Dockerfile in the repository
-                    sh 'docker build -t umair1999/app:latest .'
+                    sh 'docker build -t umair1999/pythonapp:latest .'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // Tag the Docker image with a version
-                    sh 'docker tag app:latest app:1.0'
+                    sh 'docker tag pyhtonapp:latest pythonapp:1.0'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                     }
         
                     // Push the Docker image to Docker Hub
-                    sh 'docker push umair1999/app:latest'
+                    sh 'docker push umair1999/pythonapp:latest'
                    // sh 'docker push umair1999/app:1.0'
 
                 }
