@@ -24,20 +24,20 @@ pipeline {
                 script {
                     // Build the Docker image
                     //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                     sh 'echo "Umai123!!" | sudo -S docker build -t app/app.py .'
+                     sh 'echo "Umai123!!" | sudo -S docker build -t umair1999/pythonapp:Latest .'
              
                 }
             }
         }
 
-        stage('Tag Docker Image') {
-            steps {
-                script {
-                    // Tag the Docker image
-                    docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").tag("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
-                }
-            }
-        }
+        // stage('Tag Docker Image') {
+        //     steps {
+        //         script {
+        //             // Tag the Docker image
+        //             docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").tag("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+        //         }
+        //     }
+        // }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
