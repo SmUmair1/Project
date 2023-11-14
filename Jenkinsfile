@@ -24,7 +24,7 @@ pipeline {
                 script {
                     // Build the Docker image
                     //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                    sh 'sudo -A docker build -t app/app.py .'
+                    sh 'sudo docker build -t app/app.py .'
  .'                
                 }
             }
