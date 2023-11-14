@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image using the Dockerfile in the repository
-                    sh 'docker build -t app:latest .'
+                    sh 'docker build -t umair1999/app:latest .'
                 }
             }
         }
