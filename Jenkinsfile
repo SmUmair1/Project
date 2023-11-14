@@ -5,8 +5,8 @@ pipeline {
         // Define environment variables for Git and Docker Hub credentials
         GIT_CREDENTIALS = credentials('jenkins')
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = 'umair1999/CICD'
-        DOCKER_IMAGE_TAG = 'latest'
+        // DOCKER_IMAGE_NAME = 'umair1999/CICD'
+        // DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages {
@@ -24,20 +24,20 @@ pipeline {
                 script {
                     // Build the Docker image
                     //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                     sh 'echo "Umai123!!" | sudo -S docker build -t app/app.py .'
+                     sh 'echo "Umai123!!" | sudo -S docker build -t umair1999/pythonapp:Latest .'
              
                 }
             }
         }
 
-        // stage('Tag Docker Image') {
-        //     steps {
-        //         script {
-        //             // Tag the Docker image
-        //             docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").tag("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
-        //         }
-        //     }
-        // }
+        stage('Tag Docker Image') {
+            steps {
+                script {
+                    // Tag the Docker image
+                    docker.image("pythonapp:Latest.tag("pythonapp:Latest")
+                }
+            }
+        }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
