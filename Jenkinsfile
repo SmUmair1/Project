@@ -5,6 +5,7 @@ pipeline {
         // Define environment variables for Git and Docker Hub credentials
         GIT_CREDENTIALS = credentials('jenkins')
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
+        
         // DOCKER_IMAGE_NAME = 'umair1999/cicd_12'
         // DOCKER_IMAGE_TAG = 'latest'
     }
@@ -18,41 +19,39 @@ pipeline {
                 }
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    // docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .'")
-                    sh 'echo "Umai123!!" | sudo -S docker build -t app/app.py .'
+                    docker.build("umair1999/cicd_12:latest", ".")
                 }
             }
         }
+
+
         stage('Tag Docker Image') {
             steps {
                 script {
-                    // Tag the Docker image with the version or any other identifier
                     echo 'Tagging Docker image...'
-                    sh 'sudo -S docker tag umair1999/cicd_12:latest umair1999/cicd_12:1.0'
+                    docker.image("umair1999/cicd_12:latest").tag("umair1999/cicd_12:1.0")
                 }
             }
         }
+
 
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    // Log in to Docker Hub
                     echo 'Logging in to Docker Hub...'
-                    sh 'sudo -S docker login -u umair1999 -p Umai123!!'
-
-                    // Push the Docker image to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    }
+        
                     echo 'Pushing Docker image to Docker Hub...'
-                    sh 'sudo -S docker push umair1999/cicd_12:latest'
-                   // sh 'sudo -S docker push umair1999/cicd_12:1.0'
+                    docker.image("umair1999/cicd_12:latest").push()
                 }
             }
         }
-    }
+
 
     post {
         success {
