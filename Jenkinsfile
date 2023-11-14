@@ -45,7 +45,7 @@ pipeline {
                     // Log in to Docker Hub
                     docker.withRegistry('https://hub.docker.com/repository/docker/umair1999/app.py/general', "${DOCKER_HUB_CREDENTIALS}") {
                         // Push the Docker image to Docker Hub
-                        docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                        docker.image("app/app.py:Latest").push()
                     }
                 }
             }
