@@ -5,8 +5,8 @@ pipeline {
         // Define environment variables for Git and Docker Hub credentials
         GIT_CREDENTIALS = credentials('jenkins')
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = 'umair1999/cicd_12'
-        DOCKER_IMAGE_TAG = 'latest'
+        // DOCKER_IMAGE_NAME = 'umair1999/cicd_12'
+        // DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages {
