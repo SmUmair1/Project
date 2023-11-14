@@ -36,13 +36,13 @@ pipeline {
             steps {
                 script {
                     // Log in to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'umair1999', passwordVariable: 'Umai123!!')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     }
-
+        
                     // Push the Docker image to Docker Hub
-                    sh 'docker push app:latest'
-                    sh 'docker push app:1.0'
+                    sh 'docker push your-docker-image-name:latest'
+                    sh 'docker push your-docker-image-name:1.0'
                 }
             }
         }
