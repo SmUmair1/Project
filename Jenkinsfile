@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define environment variables for Git and Docker Hub credentials
-       // GIT_CREDENTIALS = credentials('shah-muhammad.umair@maanz-ai.com')
+       GIT_CREDENTIALS = credentials('jenkins')
        // DOCKER_HUB_CREDENTIALS = credentials('shah-muhammad.umair@maanz-ai.com)
         DOCKER_IMAGE_NAME = 'umair1999/CICD'
         DOCKER_IMAGE_TAG = 'latest'
