@@ -43,7 +43,7 @@ pipeline {
                 script {
                     // Log in to Docker Hub
                     echo 'Logging in to Docker Hub...'
-                    sh 'sudo -S docker login -u your-dockerhub-username -p your-dockerhub-password'
+                    sh 'sudo -S docker login -u umair1999 -p Umai123!!'
 
                     // Push the Docker image to Docker Hub
                     echo 'Pushing Docker image to Docker Hub...'
