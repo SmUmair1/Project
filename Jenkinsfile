@@ -28,8 +28,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Tag Docker Image') {
         stage('Tag Docker Image') {
             steps {
                 script {
