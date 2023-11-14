@@ -1,7 +1,7 @@
 From python:3.8-slim
 
 WORKDIR /
-COPY ./
+COPY . /
 RUN apt-get update && apt-get install -y git
 
 RUN git clone https://github.com/SmUmair1/Project
