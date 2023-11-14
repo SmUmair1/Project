@@ -41,8 +41,8 @@ pipeline {
                     }
         
                     // Push the Docker image to Docker Hub
-                    sh 'docker push organization/app:latest'
-                    sh 'docker push organization/app:1.0'
+                    sh 'docker push umair1999/app:latest'
+                    sh 'docker push umair1999/app:1.0'
 
                 }
             }
