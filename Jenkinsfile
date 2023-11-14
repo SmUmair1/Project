@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // Tag the Docker image with a version
-                    sh 'docker tag app:latest app:1.1'
+                    sh 'docker tag app:latest app:1.0'
                 }
             }
         }
