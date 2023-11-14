@@ -41,8 +41,8 @@ pipeline {
                     }
         
                     // Push the Docker image to Docker Hub
-                    sh 'docker push your-docker-image-name:latest'
-                    sh 'docker push your-docker-image-name:1.0'
+                    sh 'docker push app:latest'
+                    sh 'docker push app:1.0'
                 }
             }
         }
