@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Tag the Docker image
-                    docker.image("pythonapp:Latest.tag("pythonapp:Latest")
+                    docker.image("pythonapp:Latest.tag("pythonapp")
                 }
             }
         }
