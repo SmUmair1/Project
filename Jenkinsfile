@@ -24,21 +24,33 @@ pipeline {
                 script {
                     // Build the Docker image
                     // docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .'")
-                    sh 'echo "Umai123!!" | sudo -S docker build -t app/app.py .'
+                    sh 'echo "Umai123!!" | sudo -S docker build -t umair1999/cicd_12:latest .'
                 }
             }
         }
 
         stage('Tag Docker Image') {
+        stage('Tag Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/umair1999/cicd_12/general', 'DOCKER_HUB_CREDENTIALS') {
-                        // Tag the Docker image
-                        docker.image("app/app.py").tag("latest")
-        
-                        // Push the tagged image to Docker Hub
-                        docker.image("app/app.py").push("latest")
-                    }
+                    // Tag the Docker image with the version or any other identifier
+                    echo 'Tagging Docker image...'
+                    sh 'sudo -S docker tag umair1999/cicd_12:latest umair1999/cicd_12:1.0'
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Log in to Docker Hub
+                    echo 'Logging in to Docker Hub...'
+                    sh 'sudo -S docker login -u your-dockerhub-username -p your-dockerhub-password'
+
+                    // Push the Docker image to Docker Hub
+                    echo 'Pushing Docker image to Docker Hub...'
+                    sh 'sudo -S docker push umair1999/cicd_12:latest'
+                   // sh 'sudo -S docker push umair1999/cicd_12:1.0'
                 }
             }
         }
