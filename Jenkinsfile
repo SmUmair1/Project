@@ -32,7 +32,7 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/umair1999/cicd_12/general', 'docker-hub-credentials') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/umair1999/cicd_12/general', 'DOCKER_HUB_CREDENTIALS') {
                         // Tag the Docker image
                         docker.image("app/app.py").tag("latest")
         
