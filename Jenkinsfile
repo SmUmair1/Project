@@ -1,20 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        // Define environment variables for Git and Docker Hub credentials
-        GIT_CREDENTIALS = credentials('jenkins')
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = 'umair1999/CICD'
-        DOCKER_IMAGE_TAG = 'latest'
-    }
-
     stages {
-        stage('Clone Git Repository') {
+        stage('Clone from Git') {
             steps {
                 script {
-                    // Clone the Git repository
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', credentialsId: GIT_CREDENTIALS]]])
+                    // Clean workspace before cloning
+                    deleteDir()
+
+                    // Clone the repository
+                    checkout scm
                 }
             }
         }
@@ -22,10 +17,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                     sh 'echo "Umai123!!" | sudo -S docker build -t app/app .'
-             
+                    // Build Docker image using the Dockerfile in the repository
+                    sh 'docker build -t app:latest .'
                 }
             }
         }
@@ -33,31 +26,25 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 script {
-                    // Tag the Docker image
-                    docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").tag("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                    // Tag the Docker image with a version
+                    sh 'docker tag app:pythonapp:1.0'
                 }
             }
         }
 
-        stage('Push Docker Image to Docker Hub') {
+        stage('Push to Docker Hub') {
             steps {
                 script {
                     // Log in to Docker Hub
-                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS}") {
-                        // Push the Docker image to Docker Hub
-                        docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'umair1999', passwordVariable: 'Umai123!!')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     }
+
+                    // Push the Docker image to Docker Hub
+                    sh 'docker push app:latest'
+                    sh 'docker push app:1.0'
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline successfully executed!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
