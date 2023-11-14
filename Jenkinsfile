@@ -5,7 +5,7 @@ pipeline {
         // Define environment variables for Git and Docker Hub credentials
         GIT_CREDENTIALS = credentials('jenkins')
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
-        DOCKER_IMAGE_NAME = 'umair1999/app.py'
+        DOCKER_IMAGE_NAME = 'umair1999/CICD'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
@@ -24,7 +24,7 @@ pipeline {
                 script {
                     // Build the Docker image
                     //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                     sh 'echo "Umai123!!" | sudo -S docker build -t umair1999/app.py .'
+                     sh 'echo "Umai123!!" | sudo -S docker build -t app/app.py .'
              
                 }
             }
