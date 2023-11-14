@@ -23,8 +23,8 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
-                    //sh 'sudo docker build -t app/app.py .'                
+                    //docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "sh 'sudo docker build -t app/app.py .")
+                    sh 'sudo docker build -t app/app.py .'                
                 }
             }
         }
