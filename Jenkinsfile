@@ -23,14 +23,14 @@ pipeline {
             }
         }
 
-        stage('Tag Docker Image') {
-            steps {
-                script {
-                    // Tag the Docker image with a version
-                    sh 'docker tag pyhtonapp1:latest pythonapp1:1.0'
-                }
-            }
-        }
+        // stage('Tag Docker Image') {
+        //     steps {
+        //         script {
+        //             // Tag the Docker image with a version
+        //             sh 'docker tag pyhtonapp1:latest pythonapp1:1.0'
+        //         }
+        //     }
+        // }
 
         stage('Push to Docker Hub') {
             steps {
