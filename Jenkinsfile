@@ -23,6 +23,7 @@ pipeline {
             }
         }
 
+      
         // stage('Tag Docker Image') {
         //     steps {
         //         script {
@@ -42,13 +43,12 @@ pipeline {
         
                     // Push the Docker image to Docker Hub
                     sh 'docker push umair1999/pythonapp1:latest'
-                   // sh 'docker push umair1999/app:1.0'
-
+                    // sh 'docker push umair1999/app:1.0'
                 }
             }
         }
     }
-}
+
     post {
         success {
             echo 'Pipeline successfully executed!'
